@@ -8,7 +8,7 @@ public class TestScrabble {
 
 	@Test
 	public void testInitial() {
-		Scrabble s=new Scrabble();
+		Scrabble s=new EnglishScrabble();
 		s.removeTiles("");
 		assertEquals(
 				"12: E\n"+
@@ -23,7 +23,7 @@ public class TestScrabble {
 
 	@Test
 	public void test1() {
-		Scrabble s=new Scrabble();
+		Scrabble s=new EnglishScrabble();
 		s.removeTiles("AEERTYOXMCNB_S");
 		assertEquals(
 				"10: E\n"+
@@ -40,7 +40,7 @@ public class TestScrabble {
 
 	@Test
 	public void test2() {
-		Scrabble s=new Scrabble();
+		Scrabble s=new EnglishScrabble();
 		s.removeTiles("LQTOONOEFFJZT");
 		assertEquals(
 				"11: E\n"+
@@ -53,11 +53,11 @@ public class TestScrabble {
 				"1: K, X\n"+
 				"0: F, J, Q, Z\n",s.toString());
 	}
-	
+
 	@Test
 	public void test3() {
-		Scrabble s=new Scrabble();
+		Scrabble s=new EnglishScrabble();
 		s.removeTiles("AXHDRUIOR_XHJZUQEE");
 		assertEquals("Invalid input. More X's have been taken from the bag than possible.",s.toString());
-	}	
+	}
 }
