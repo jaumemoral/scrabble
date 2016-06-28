@@ -42,8 +42,7 @@ public class Scrabble {
 			Frequency frequency = pair.getValue();
 			if (frequency.isInvalid())
 				throw new TooManyTilesTakenException("Invalid input. More "
-						+ tile
-						+ "'s have been taken from the bag than possible.");
+						+ tile+ "'s have been taken from the bag than possible.");
 			Set<Character> tiles = tilesIndexedByFrequency.get(frequency);
 			if (tiles == null) {
 				tiles = new TreeSet<Character>();
@@ -61,8 +60,7 @@ public class Scrabble {
 				.entrySet()) {
 			result.append(pair.getKey());
 			result.append(": ");
-			result.append(pair.getValue().toString().replace("[", "")
-					.replace("]", ""));
+			result.append(pair.getValue().toString().replace("[", "").replace("]", ""));
 			result.append("\n");
 		}
 		return result.toString();
