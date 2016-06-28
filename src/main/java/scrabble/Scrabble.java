@@ -52,8 +52,7 @@ public class Scrabble {
 		return tilesIndexedByFrequency;
 	}
 
-	String printIndexByFrequency(
-			SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency) {
+	String printIndexByFrequency(SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency) {
 		StringBuilder result = new StringBuilder();
 		for (Map.Entry<Frequency, Set<Character>> pair : tilesIndexedByFrequency.entrySet()) {
 			result.append(pair.getKey());
