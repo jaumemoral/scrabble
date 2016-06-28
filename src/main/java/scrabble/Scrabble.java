@@ -36,8 +36,7 @@ public class Scrabble {
 	SortedMap<Frequency, Set<Character>> indexTilesByFrequency()
 			throws TooManyTilesTakenException {
 		SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency = new TreeMap<Frequency, Set<Character>>();
-		for (Map.Entry<Character, Frequency> pair : frequenciesIndexedByTile
-				.entrySet()) {
+		for (Map.Entry<Character, Frequency> pair : frequenciesIndexedByTile.entrySet()) {
 			Character tile = pair.getKey();
 			Frequency frequency = pair.getValue();
 			if (frequency.isInvalid())
@@ -56,8 +55,7 @@ public class Scrabble {
 	String printIndexByFrequency(
 			SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency) {
 		StringBuilder result = new StringBuilder();
-		for (Map.Entry<Frequency, Set<Character>> pair : tilesIndexedByFrequency
-				.entrySet()) {
+		for (Map.Entry<Frequency, Set<Character>> pair : tilesIndexedByFrequency.entrySet()) {
 			result.append(pair.getKey());
 			result.append(": ");
 			result.append(pair.getValue().toString().replace("[", "").replace("]", ""));
