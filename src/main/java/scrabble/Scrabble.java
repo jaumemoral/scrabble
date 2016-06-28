@@ -40,8 +40,7 @@ public class Scrabble {
 			Character tile = pair.getKey();
 			Frequency frequency = pair.getValue();
 			if (frequency.isInvalid())
-				throw new TooManyTilesTakenException("Invalid input. More "
-						+ tile+ "'s have been taken from the bag than possible.");
+				throw new TooManyTilesTakenException(tile);
 			Set<Character> tiles = tilesIndexedByFrequency.get(frequency);
 			if (tiles == null) {
 				tiles = new TreeSet<Character>();
@@ -75,8 +74,8 @@ public class Scrabble {
 
 @SuppressWarnings("serial")
 class TooManyTilesTakenException extends Exception {
-	public TooManyTilesTakenException(String message) {
-		super(message);
+	public TooManyTilesTakenException(char tile) {
+		super("Invalid input. More "+ tile+ "'s have been taken from the bag than possible.");
 	}
 }
 
