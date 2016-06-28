@@ -33,11 +33,12 @@ public class Scrabble {
 			removeTile(tile);
 	}
 
-	SortedMap<Frequency, Set<Character>> indexTilesByFrequency() {
+	SortedMap<Frequency, Set<Character>> indexTilesByFrequency() throws TooManyTilesTakenException {
 		SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency = new TreeMap<Frequency, Set<Character>>();
 		for (Map.Entry<Character, Frequency> pair : frequenciesIndexedByTile.entrySet()) {
 			Character tile=pair.getKey();
 			Frequency frequency=pair.getValue();
+			if (frequency.isInvalid()) throw new TooManyTilesTakenException("Invalid input. More "+tile+"'s have been taken from the bag than possible.");
 			Set<Character> tiles=tilesIndexedByFrequency.get(frequency);
 			if (tiles==null) {
 				tiles=new TreeSet<Character>();
@@ -48,34 +49,33 @@ public class Scrabble {
 		return tilesIndexedByFrequency;
 	}
 
-	public String toString() {
+	String printIndexByFrequency(SortedMap<Frequency, Set<Character>> tilesIndexedByFrequency) {
 		StringBuilder result = new StringBuilder();
-		StringBuilder errors = new StringBuilder();
-		for (Map.Entry<Frequency, Set<Character>> pair : indexTilesByFrequency().entrySet()) {
-			if (pair.getKey().isInvalid()) {
-				for (char tile : pair.getValue())
-					errors.append("Invalid input. More "+tile+"'s have been taken from the bag than possible.");
-			}
-		}
-
-		for (Map.Entry<Frequency, Set<Character>> pair : indexTilesByFrequency().entrySet()) {
+		for (Map.Entry<Frequency, Set<Character>> pair : tilesIndexedByFrequency.entrySet()) {
 			result.append(pair.getKey());
 			result.append(": ");
-			boolean firstTime=true;
-			for (Character tile : pair.getValue()) {
-				if (!firstTime) result.append(", ");
-				result.append(tile);
-				firstTime=false;
-			}
+			result.append(pair.getValue().toString().replace("[","").replace("]",""));
 			result.append("\n");
 		}
-		System.out.println(result);
-		if (errors.toString().isEmpty()) {
-			return result.toString();
-		} else {
-			return errors.toString();
+		return result.toString();
+	}
+
+
+	public String toString() {
+		try {
+			return printIndexByFrequency(indexTilesByFrequency());
+		} catch (TooManyTilesTakenException e) {
+			return e.getMessage();
 		}
 	}
+
+}
+
+@SuppressWarnings("serial")
+class TooManyTilesTakenException extends Exception {
+    public TooManyTilesTakenException(String message) {
+       super(message);
+    }
 }
 
 class Frequency implements Comparable<Frequency> {
