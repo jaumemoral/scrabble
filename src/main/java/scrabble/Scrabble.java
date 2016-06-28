@@ -38,7 +38,8 @@ public class Scrabble {
 		for (Map.Entry<Character, Frequency> pair : frequenciesIndexedByTile.entrySet()) {
 			Character tile=pair.getKey();
 			Frequency frequency=pair.getValue();
-			if (frequency.isInvalid()) throw new TooManyTilesTakenException("Invalid input. More "+tile+"'s have been taken from the bag than possible.");
+			if (frequency.isInvalid()) throw new TooManyTilesTakenException(
+					"Invalid input. More "+tile+"'s have been taken from the bag than possible.");
 			Set<Character> tiles=tilesIndexedByFrequency.get(frequency);
 			if (tiles==null) {
 				tiles=new TreeSet<Character>();
