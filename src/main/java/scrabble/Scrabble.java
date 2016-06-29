@@ -12,16 +12,12 @@ public class Scrabble {
 	Map<Character, Frequency> frequenciesIndexedByTile = new HashMap<Character, Frequency>();
 
 	Scrabble(String tiles) {
-		for (char tile : tiles.toCharArray())
-			addTile(tile);
+		for (char tile : tiles.toCharArray()) addTile(tile);
 	}
 
 	public void addTile(char tile) {
-		try {
-			frequenciesIndexedByTile.get(tile).increase();
-		} catch (NullPointerException e) {
-			frequenciesIndexedByTile.put(tile, new Frequency(1));
-		}
+		frequenciesIndexedByTile.putIfAbsent(tile, new Frequency(0));
+		frequenciesIndexedByTile.get(tile).increase();
 	}
 
 	public void removeTile(char tile) {
@@ -29,8 +25,7 @@ public class Scrabble {
 	}
 
 	public void removeTiles(String tiles) {
-		for (char tile : tiles.toCharArray())
-			removeTile(tile);
+		for (char tile : tiles.toCharArray()) removeTile(tile);
 	}
 
 	SortedMap<Frequency, Set<Character>> indexTilesByFrequency()
@@ -41,12 +36,8 @@ public class Scrabble {
 			Frequency frequency = pair.getValue();
 			if (frequency.isInvalid())
 				throw new TooManyTilesTakenException(tile);
-			Set<Character> tiles = tilesIndexedByFrequency.get(frequency);
-			if (tiles == null) {
-				tiles = new TreeSet<Character>();
-				tilesIndexedByFrequency.put(frequency, tiles);
-			}
-			tiles.add(tile);
+			tilesIndexedByFrequency.putIfAbsent(frequency, new TreeSet<Character>());
+			tilesIndexedByFrequency.get(frequency).add(tile);
 		}
 		return tilesIndexedByFrequency;
 	}
